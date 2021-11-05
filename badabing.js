@@ -1,7 +1,7 @@
 
 function reload() 
 {
-  console.log("force refresh starting ...")
+  console.log("badabing: reload")
   var httpRequest = new XMLHttpRequest()
 
   httpRequest.onreadystatechange = function() {
@@ -39,7 +39,7 @@ function reload()
         }
       } 
       else {
-        console.log("Something went wrong. Are you connected to internet?")
+        console.log("badabing: refresh failed")
       }
     }
   }

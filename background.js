@@ -1,7 +1,6 @@
-
-function Run() 
+function Run()
 {
-  console.log("Got Alarm! Updating wallpaper ...")
+  console.log("Alarm")
   var httpRequest = new XMLHttpRequest()
 
   httpRequest.onreadystatechange = function() {
@@ -19,13 +18,13 @@ function Run()
             if (hash != items.lastHash) 
               setWall(url, hash, title, message)
             else 
-              console.log("New wallpaper not available.")
+              console.log(`badabing: url not found: ${url}`)
           })
 
         }
       } 
       else {
-        console.log("Something went wrong. Are you connected to internet?")
+        console.log("badabing: load failed")
       }
     }
   }
@@ -70,9 +69,7 @@ chrome.app.runtime.onLaunched.addListener( () =>
   }
 )
 
-
 chrome.alarms.onAlarm.addListener(Run)
-
 
 // calculate daily at 1am
 chrome.runtime.onStartup.addListener( () => 
