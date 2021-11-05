@@ -1,5 +1,6 @@
 
-function reload() {
+function reload() 
+{
   console.log("force refresh starting ...")
   var httpRequest = new XMLHttpRequest()
 
@@ -12,26 +13,32 @@ function reload() {
         let message = data.images[0].copyright
         let title = data.images[0].title
         if (url) {
-          chrome.wallpaper.setWallpaper({
-            url     : 'https://www.bing.com'+url, 
-            layout  : 'STRETCH', 
-            filename: 'bing_wallpaper'
-          }, () => {
-            chrome.notifications.clear("badabing", () => {})
-            chrome.notifications.create("badabing", {
-                type: 'basic', 
-                iconUrl: 'icons/128.png', 
-                title: title, 
-                message: message, 
-                contextMessage: "Bada Bing ..."
-              },
-              () => {})
-            let launchURL = 'https://www.bing.com'+url
-            chrome.notifications.onClicked.addListener(() => window.open(launchURL))
-                
-          })
+          let imageUrl = 'https://www.bing.com'+url
+          chrome.wallpaper.setWallpaper(
+            {
+              url     : imageUrl, 
+              layout  : 'STRETCH', 
+              filename: 'bing_wallpaper'
+            }, 
+            () => 
+            {
+              chrome.notifications.clear("badabing", () => {})
+              chrome.notifications.create("badabing", 
+                {
+                  type          : 'basic', 
+                  iconUrl       : 'icons/128.png', 
+                  title         : title, 
+                  message       : message, 
+                  contextMessage: "Bada Bing ..."
+                },
+                () => {}
+              )
+              chrome.notifications.onClicked.addListener(() => window.open(imageUrl))
+            }
+          )
         }
-      } else {
+      } 
+      else {
         console.log("Something went wrong. Are you connected to internet?")
       }
     }

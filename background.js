@@ -1,5 +1,6 @@
 
-function Run() {
+function Run() 
+{
   console.log("Got Alarm! Updating wallpaper ...")
   var httpRequest = new XMLHttpRequest()
 
@@ -22,7 +23,8 @@ function Run() {
           })
 
         }
-      } else {
+      } 
+      else {
         console.log("Something went wrong. Are you connected to internet?")
       }
     }
@@ -33,44 +35,54 @@ function Run() {
   httpRequest.send()
 }
 
-function setWall(url, hash, title, message) {
-  chrome.wallpaper.setWallpaper({
-    url     : 'https://www.bing.com'+url,
-    layout  : 'STRETCH',
-    filename: 'bing_wallpaper'
-  }, () => {
+function setWall(url, hash, title, message) 
+{
+  let imageUrl = 'https://www.bing.com'+url
+
+  chrome.wallpaper.setWallpaper(
+    {
+      url     : imageUrl,
+      layout  : 'STRETCH',
+      filename: 'bing_wallpaper'
+    }, 
+    () => 
+    {
       chrome.storage.local.set({lastHash: hash})
-      chrome.notifications.create("badabing", {
+      chrome.notifications.create("badabing", 
+        {
           type: 'basic', 
           iconUrl: 'icons/128.png', 
           title: title, 
           message: message, 
           contextMessage: "Bada Bing ..."
         },
-        () => {}) 
-      let launchURL = 'https://www.bing.com'+url
-      chrome.notifications.onClicked.addListener(() => window.open(launchURL))
-
+        () => {}
+      ) 
+      chrome.notifications.onClicked.addListener(() => window.open(imageUrl))
     }
   )
 }
 
 
-chrome.app.runtime.onLaunched.addListener(function() {
-  chrome.app.window.create('badabing.html', {state: 'maximized'})
-})
+chrome.app.runtime.onLaunched.addListener( () =>
+  {
+    chrome.app.window.create('badabing.html', {state: 'maximized'})
+  }
+)
 
 
 chrome.alarms.onAlarm.addListener(Run)
 
 
 // calculate daily at 1am
-chrome.runtime.onStartup.addListener( function() {
-  chrome.alarms.create("update", {"delayInMinutes": 2,"periodInMinutes": 60})
-})
+chrome.runtime.onStartup.addListener( () => 
+  {
+    chrome.alarms.create("update", {"delayInMinutes": 2,"periodInMinutes": 60})
+  }
+)
 
-chrome.runtime.onInstalled.addListener( function(details) {
-  if(details.reason == "install") {
+chrome.runtime.onInstalled.addListener( (details) => {
+  if (details.reason == "install") {
     Run()
     chrome.alarms.create("update", {"delayInMinutes": 60,"periodInMinutes": 60})
   }
