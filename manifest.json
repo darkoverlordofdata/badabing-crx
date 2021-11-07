@@ -1,5 +1,5 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
+    "update_url": "https://clients2.google.com/service/update2/crx",
 
     "name": "Bada Bing (Chromebook)",
     "short_name": "Daily Wallpaper Changer",
@@ -10,13 +10,16 @@
         "64": "icons/64.png",
         "128": "icons/128.png"
     },
-    "permissions": ["alarms", "storage", "notifications", "wallpaper", "https://www.bing.com/"],
-    "app": {
-        "background": {
-            "scripts": [
-                "background.js"
-            ]
-        }
+    "permissions": ["alarms", "storage", "notifications", "wallpaper"],
+    "host_permissions": ["https://www.bing.com/"],
+    "action": {
+        "default_title": "Bada Bing",
+        "default_icon": "icons/48.png",
+        "default_popup": "badabing.html"
     },
-    "manifest_version": 2
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "manifest_version": 3
 }
